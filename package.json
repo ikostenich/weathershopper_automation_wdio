@@ -1,0 +1,17 @@
+{
+  "name": "weathershopper_automation_wdio",
+  "version": "1.0.0",
+  "description": "Weathershopper app automation project",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ikostenich/weathershopper_automation_wdio.git"
+  },
+  "author": "Igor Kostenich",
+  "bugs": {
+    "url": "https://github.com/ikostenich/weathershopper_automation_wdio/issues"
+  },
+  "homepage": "https://github.com/ikostenich/weathershopper_automation_wdio#readme"
+}
