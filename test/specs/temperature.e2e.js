@@ -1,8 +1,8 @@
 const TemperaturePage = require('../pageobjects/TemperaturePage');
-const MoisturizerPage = require('../pageobjects/MoisturizerPage');
-const SunscreensPage = require('../pageobjects/SunscreensPage');
+const MoisturizerPage = require('../pageobjects/products/MoisturizerPage');
+const SunscreensPage = require('../pageobjects/products/SunscreensPage');
 
-describe.skip('Temperature Page test', () => {
+describe('Temperature Page test', () => {
     it('Should open Temperature page', async () => {
         TemperaturePage.open();
         await TemperaturePage.assertPageLoaded();

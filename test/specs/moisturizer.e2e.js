@@ -1,4 +1,4 @@
-const MoisturizerPage = require('../pageobjects/MoisturizerPage');
+const MoisturizerPage = require('../pageobjects/products/MoisturizerPage');
 const CartPage = require('../pageobjects/CartPage');
 const { filterData } = require('../data/moisturizersData');
 
@@ -23,7 +23,7 @@ describe('Temperature Page test', () => {
         const itemsInCart = await MoisturizerPage.getCartItemsAmount();
         expect(itemsInCart).toBe(2);
 
-        await MoisturizerPage.clickCart();
+        await MoisturizerPage.cartButton.click();
         await CartPage.assertPageLoaded();
     });
 });

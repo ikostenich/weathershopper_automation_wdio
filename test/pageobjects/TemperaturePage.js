@@ -1,4 +1,5 @@
 const BasePage = require('./BasePage');
+const { TEMPERATURE_PAGE_URL } = require('../config/constants');
 
 class TemperaturePage extends BasePage {
     get temperatureField() {
@@ -18,7 +19,7 @@ class TemperaturePage extends BasePage {
     }
 
     open() {
-        super.open('/');
+        super.open(TEMPERATURE_PAGE_URL);
     }
 
     async getTemperature() {
