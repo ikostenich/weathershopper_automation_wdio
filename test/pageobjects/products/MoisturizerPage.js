@@ -1,9 +1,14 @@
 const BaseProductPage = require('./BaseProductPage');
-const { MOISTURIZER_PAGE_URL } = require('../../config/constants');
+const { pageUrls, pageTitles } = require('../../config/constants');
 
 class MoisturizerPage extends BaseProductPage {
-    open() {
-        super.open(MOISTURIZER_PAGE_URL);
+    async open() {
+        await super.open(pageUrls.MOISTURIZER_PAGE_URL);
+        await this.pageLabel.waitForDisplayed({ timeout: WAIT_TIMEOUT });
+    }
+
+    async waitTillLoaded() {
+        await super.waitTillLoaded(pageTitles.MOISTURIZER_PAGE);
     }
 }
 

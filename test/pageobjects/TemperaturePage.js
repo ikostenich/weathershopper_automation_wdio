@@ -1,25 +1,37 @@
 const BasePage = require('./BasePage');
-const { TEMPERATURE_PAGE_URL } = require('../config/constants');
+const { pageUrls, pageTitles } = require('../config/constants');
 
 class TemperaturePage extends BasePage {
+    locators = {
+        temperatureField: '#temperature',
+        temperatureMeasurement: '#temperature sup',
+        buyMoisturizersButton: 'a[href="/moisturizer"]',
+        buySunscreensButton: 'a[href="/sunscreen"]',
+    };
+
     get temperatureField() {
-        return $('#temperature');
+        return $(this.locators.temperatureField);
     }
 
     get temperatureMeasurement() {
-        return $('#temperature sup');
+        return $(this.locators.temperatureMeasurement);
     }
 
     get buyMoisturizersButton() {
-        return $('a[href="/moisturizer"]');
+        return $(this.locators.buyMoisturizersButton);
     }
 
     get buySunscreensButton() {
-        return $('a[href="/sunscreen"]');
+        return $(this.locators.buySunscreensButton);
     }
 
-    open() {
-        super.open(TEMPERATURE_PAGE_URL);
+    async open() {
+        await super.open(pageUrls.TEMPERATURE_PAGE_URL);
+        await this.pageLabel.waitForDisplayed({ timeout: WAIT_TIMEOUT });
+    }
+
+    async waitTillLoaded() {
+        await super.waitTillLoaded(pageTitles.TEMPERATURE_PAGE);
     }
 
     async getTemperature() {
@@ -35,8 +47,10 @@ class TemperaturePage extends BasePage {
         }
         if (temp < 19) {
             await this.buyMoisturizersButton.click();
+            await super.waitTillLoaded(pageTitles.MOISTURIZER_PAGE);
         } else if (temp > 34) {
             await this.buySunscreensButton.click();
+            await super.waitTillLoaded(pageTitles.SUNSCREENS_PAGE);
         }
     }
 }

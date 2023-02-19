@@ -1,9 +1,14 @@
 const BaseProductPage = require('./BaseProductPage');
-const { SUNSCREENS_PAGE_URL } = require('../../config/constants');
+const { pageUrls, pageTitles } = require('../../config/constants');
 
 class SunscreensPage extends BaseProductPage {
-    open() {
-        super.open(SUNSCREENS_PAGE_URL);
+    async open() {
+        await super.open(pageUrls.SUNSCREENS_PAGE_URL);
+        await this.pageLabel.waitForDisplayed({ timeout: WAIT_TIMEOUT });
+    }
+
+    async waitTillLoaded() {
+        await super.waitTillLoaded(pageTitles.SUNSCREENS_PAGE);
     }
 }
 

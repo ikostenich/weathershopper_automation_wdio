@@ -1,8 +1,13 @@
+const { WAIT_TIMEOUT } = require('../../config/constants');
 const Product = require('../../objects/Product');
 const BasePage = require('../BasePage');
+const CartPage = require('../cart/CartPage');
 
 class BaseProductPage extends BasePage {
     locators = {
+        pagelabelLocator: 'div.container h2',
+        productContainerLocator: 'div.col-4',
+        cartButtonLocator: 'ul.navbar-nav button',
         itemTitleLocator: 'p.top-space-10',
         priceFieldLocator: 'p*=Price',
         addButtonLocator: 'button=Add',
@@ -10,11 +15,11 @@ class BaseProductPage extends BasePage {
     };
 
     get productContainers() {
-        return $$('div.col-4');
+        return $$(this.locators.productContainerLocator);
     }
 
     get cartButton() {
-        return $('ul.navbar-nav button');
+        return $(this.locators.cartButtonLocator);
     }
 
     async getProductObject(productElement) {
@@ -38,6 +43,15 @@ class BaseProductPage extends BasePage {
         }
     }
 
+    async addRandomProductToCart() {
+        await this.open();
+        const productObjects = await this.getProducts();
+        await this.addProductToCart(productObjects[0]);
+        await this.cartButton.click();
+        await CartPage.totalField.waitForDisplayed({ timeout: WAIT_TIMEOUT });
+        return productObjects[0];
+    }
+
     async getProducts() {
         const productObjects = [];
         const productElements = await this.productContainers;
@@ -59,12 +73,23 @@ class BaseProductPage extends BasePage {
         return productObjects;
     }
 
+    async filterByNameSortAndAddToCart(name) {
+        const productsFilteredOne = await this.filterProductsByName(name);
+        const sortedProductsOne = await this.sortProductsByPrice(productsFilteredOne);
+        await this.addProductToCart(sortedProductsOne[0]);
+    }
+
     async getCartItemsAmount() {
         const itemsText = await this.cartButton.$(this.locators.cartItemsNumberLocator).getText();
         if (itemsText === 'Empty') {
             return 0;
         }
         return parseInt(itemsText.trim().split(' ')[0], 10);
+    }
+
+    async goToCart() {
+        await this.cartButton.click();
+        await CartPage.waitTillLoaded();
     }
 }
 

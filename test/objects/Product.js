@@ -13,31 +13,6 @@ class Product {
     toString() {
         return `Product(title=${this.title}, price=${this.price})`;
     }
-
-    equals(other) {
-        return this.title === other.title
-          && this.price === other.price;
-    }
-
-    greaterThan(other) {
-        return this.price > other.price;
-    }
-
-    lessThan(other) {
-        return this.price < other.price;
-    }
-
-    greaterThanOrEqual(other) {
-        return this.price >= other.price;
-    }
-
-    lessThanOrEqual(other) {
-        return this.price <= other.price;
-    }
-
-    notEqual(other) {
-        return this.price !== other.price;
-    }
 }
 
 class ProductBuilder {
