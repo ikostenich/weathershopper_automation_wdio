@@ -24,7 +24,7 @@ npm run test
 ```
 
 ### Running Tests in docker 
-Docker tests are running in headless chrome browser.
+Docker tests are running in headless chrome browser in parallel (up to 4 threads).
 
 ```bash
 docker-compose up

@@ -2,7 +2,10 @@ const { BASE_URL } = require('./test/config/constants');
 
 exports.config = {
 
-    runner: 'local',
+    hostname: 'localhost',
+    port: 4444,
+    path: '/',
+
     jasmineOpts: {
         defaultTimeoutInterval: (24 * 60 * 60 * 1000),
     },
@@ -11,18 +14,23 @@ exports.config = {
         './test/specs/**/*.js',
     ],
 
-    maxInstances: 1,
+    maxInstances: 4,
 
     capabilities: [{
-        maxInstances: 1,
 
+        maxInstances: 5,
         browserName: 'chrome',
         acceptInsecureCerts: true,
-
+        'goog:chromeOptions': {
+            args: [
+                '--disable-infobars',
+                '--headless',
+                '--disable-gpu',
+                '--window-size=1440,735',
+            ],
+        },
     }],
-
     logLevel: 'error',
-
     bail: 0,
 
     baseUrl: BASE_URL,
@@ -32,12 +40,21 @@ exports.config = {
     connectionRetryTimeout: 120000,
 
     connectionRetryCount: 3,
-    services: ['chromedriver'],
+
+    services: ['docker'],
+
     framework: 'mocha',
-    reporters: ['spec'],
+
+    specFileRetries: 1,
+
     mochaOpts: {
         ui: 'bdd',
         timeout: 60000,
     },
+
+    reporters: ['spec', ['allure', {
+        outputDir: 'allure-results',
+        disableWebdriverStepsReporting: true,
+    }]],
 
 };

@@ -16,4 +16,4 @@ RUN dpkg -i allure_${ALLURE_VERSION}-1_all.deb
 
 COPY . .
 
-CMD npm run test && allure generate --clean --output allure-report allure-results && allure serve /app/allure-results
+CMD npx wdio wdio_docker.conf.js && allure generate --clean --output allure-report allure-results && allure serve /app/allure-results
