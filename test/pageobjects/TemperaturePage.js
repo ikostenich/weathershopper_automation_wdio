@@ -1,3 +1,4 @@
+const allureReporter = require('@wdio/allure-reporter').default;
 const BasePage = require('./BasePage');
 const { pageUrls, pageTitles } = require('../config/constants');
 
@@ -35,6 +36,7 @@ class TemperaturePage extends BasePage {
     }
 
     async getTemperature() {
+        allureReporter.addStep('Getting temperature number');
         const parentSpanText = await this.temperatureField.getText();
         const childSubText = await this.temperatureMeasurement.getText();
         return parentSpanText.replace(childSubText, '');
@@ -45,10 +47,13 @@ class TemperaturePage extends BasePage {
         if (!temp) {
             temp = this.getTemperature();
         }
+        allureReporter.addStep('Checking temperature condition');
         if (temp < 19) {
+            allureReporter.addStep('Opening Moisturizers page');
             await this.buyMoisturizersButton.click();
             await super.waitTillLoaded(pageTitles.MOISTURIZER_PAGE);
         } else if (temp > 34) {
+            allureReporter.addStep('Opening Sunscreeners page');
             await this.buySunscreensButton.click();
             await super.waitTillLoaded(pageTitles.SUNSCREENS_PAGE);
         }

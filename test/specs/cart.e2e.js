@@ -14,7 +14,6 @@ describe('Cart test', () => {
         expect(await CartPage.getTotalPrice()).toBe(this.productObject.price);
     });
     it('Should successfully purchase product', async () => {
-        await MoisturizerPage.addRandomProductToCart();
         await CartPage.startPayment();
         await PaymentModal.makePayment(payerData, stripeTestCard);
         expect(await ConfirmationPage.getPageTitle()).toHaveValue(pageTitles.CONFIRMATION_PAGE.toLowerCase());

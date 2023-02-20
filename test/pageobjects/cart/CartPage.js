@@ -1,3 +1,4 @@
+const allureReporter = require('@wdio/allure-reporter').default;
 const BasePage = require('../BasePage');
 const PaymentModal = require('./PaymentModal');
 const Product = require('../../objects/Product');
@@ -49,16 +50,19 @@ class CartPage extends BasePage {
     }
 
     async startPayment() {
+        allureReporter.addStep('Open Pay With Card modal');
         await this.payWithCardButton.click();
         await PaymentModal.waitTillOpen();
     }
 
     async isProductDisplayed(productObject) {
+        allureReporter.addStep('Check if product displayed');
         const existingProducts = await this.getProducts();
         return existingProducts.some((existingProduct) => existingProduct.equals(productObject));
     }
 
     async getTotalPrice() {
+        allureReporter.addStep('Get total price');
         const totalText = await this.totalField.getText();
         const totalPrice = totalText.trim().split(' ').pop();
         return parseInt(totalPrice, 10);

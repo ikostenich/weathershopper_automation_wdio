@@ -1,3 +1,4 @@
+const allureReporter = require('@wdio/allure-reporter').default;
 const BasePage = require('../BasePage');
 const ConfigmationPage = require('./ConfirmationPage');
 const { WAIT_TIMEOUT } = require('../../config/constants');
@@ -36,17 +37,20 @@ class PaymentModal extends BasePage {
     }
 
     async waitTillOpen() {
+        allureReporter.addStep('Waiting Payment modal to load');
         await this.switchToIframe();
         await this.modalTitle.waitForDisplayed({ timeout: WAIT_TIMEOUT });
     }
 
     async makePayment(payerData, cardData) {
+        allureReporter.addStep('Filling in test data to Payment form');
         await fillField(this.locators.emailField, payerData.email);
         await fillField(this.locators.cardNumberField, cardData.number);
         await fillField(this.locators.cardExpirationField, cardData.expirationDate);
         await fillField(this.locators.cvcField, cardData.cvc);
         await fillField(this.locators.zipCodeField, payerData.zipCode);
         await this.payButton.click();
+        allureReporter.addStep('Waiting for confirmation page to display');
         await this.stripeIframe.waitForDisplayed({ reverse: true });
         await ConfigmationPage.waitTillLoaded();
     }

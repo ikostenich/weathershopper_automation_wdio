@@ -13,6 +13,11 @@ class Product {
     toString() {
         return `Product(title=${this.title}, price=${this.price})`;
     }
+
+    equals(otherProduct) {
+        return this.title === otherProduct.title
+            && this.price === otherProduct.price;
+    }
 }
 
 class ProductBuilder {

@@ -1,3 +1,4 @@
+const allureReporter = require('@wdio/allure-reporter').default;
 const { WAIT_TIMEOUT } = require('../../config/constants');
 const Product = require('../../objects/Product');
 const BasePage = require('../BasePage');
@@ -33,6 +34,7 @@ class BaseProductPage extends BasePage {
     }
 
     async addProductToCart(productObject) {
+        allureReporter.addStep('Adding product to cart');
         const productContainers = await this.productContainers;
         for (const productContainer of productContainers) {
             const productTitle = await productContainer.$(this.locators.itemTitleLocator).getText();
@@ -44,6 +46,7 @@ class BaseProductPage extends BasePage {
     }
 
     async addRandomProductToCart() {
+        allureReporter.addStep('Adding random product to cart');
         await this.open();
         const productObjects = await this.getProducts();
         await this.addProductToCart(productObjects[0]);
@@ -53,6 +56,7 @@ class BaseProductPage extends BasePage {
     }
 
     async getProducts() {
+        allureReporter.addStep('Getting list of product elements on page');
         const productObjects = [];
         const productElements = await this.productContainers;
         for (const product of productElements) {
@@ -63,11 +67,13 @@ class BaseProductPage extends BasePage {
     }
 
     async filterProductsByName(name) {
+        allureReporter.addStep('Filtering products by name');
         const products = await this.getProducts();
         return products.filter((product) => product.title.toLowerCase().includes(name.toLowerCase()));
     }
 
     async sortProductsByPrice(products = null) {
+        allureReporter.addStep('Sorting products by price');
         const productObjects = products || await this.getProducts();
         productObjects.sort((a, b) => a.price - b.price);
         return productObjects;
@@ -76,10 +82,12 @@ class BaseProductPage extends BasePage {
     async filterByNameSortAndAddToCart(name) {
         const productsFilteredOne = await this.filterProductsByName(name);
         const sortedProductsOne = await this.sortProductsByPrice(productsFilteredOne);
+        allureReporter.addStep('Adding product to cart');
         await this.addProductToCart(sortedProductsOne[0]);
     }
 
     async getCartItemsAmount() {
+        allureReporter.addStep('Getting number or items in cart');
         const itemsText = await this.cartButton.$(this.locators.cartItemsNumberLocator).getText();
         if (itemsText === 'Empty') {
             return 0;
@@ -88,6 +96,7 @@ class BaseProductPage extends BasePage {
     }
 
     async goToCart() {
+        allureReporter.addStep('Opening cart');
         await this.cartButton.click();
         await CartPage.waitTillLoaded();
     }
