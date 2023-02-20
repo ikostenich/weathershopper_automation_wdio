@@ -1,0 +1,32 @@
+{
+  "name": "weathershopper_automation_wdio",
+  "version": "1.0.0",
+  "description": "Weathershopper app automation project",
+  "scripts": {
+    "test": "wdio run ./wdio.conf.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ikostenich/weathershopper_automation_wdio.git"
+  },
+  "author": "Igor Kostenich",
+  "bugs": {
+    "url": "https://github.com/ikostenich/weathershopper_automation_wdio/issues"
+  },
+  "homepage": "https://github.com/ikostenich/weathershopper_automation_wdio#readme",
+  "devDependencies": {
+    "@wdio/allure-reporter": "^8.3.5",
+    "@wdio/cli": "^8.3.9",
+    "@wdio/local-runner": "^8.3.9",
+    "@wdio/mocha-framework": "^8.3.0",
+    "@wdio/selenium-standalone-service": "^8.3.2",
+    "@wdio/spec-reporter": "^8.3.0",
+    "allure-commandline": "^2.21.0",
+    "chromedriver": "latest",
+    "eslint": "^8.34.0",
+    "eslint-config-airbnb": "^19.0.4",
+    "eslint-plugin-wdio": "^8.0.14",
+    "wdio-chromedriver-service": "^8.1.1",
+    "wdio-docker-service": "^3.2.1"
+  }
+}
